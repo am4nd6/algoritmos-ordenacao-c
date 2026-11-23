@@ -71,10 +71,10 @@ static void executar_algoritmo(const OpcaoAlgoritmo *opcao, const int *original,
     opcao->funcao(copia, n, &metricas); /* Chama o algoritmo escolhido. */
     fim = clock(); /* Termina a medição. */
     tempo_ms = 1000.0 * (double)(fim - inicio) / (double)CLOCKS_PER_SEC; /* Converte ticks em ms. */
-    printf("%c%s Sort\n", (char)toupper((unsigned char)opcao->nome[0]), opcao->nome + 1); /* Mostra o nome com aparência profissional. */
+    printf("\n%c%s Sort\n", (char)toupper((unsigned char)opcao->nome[0]), opcao->nome + 1); /* Mostra o nome com aparência profissional e separa os resultados. */
     printf("  Tempo        : %.3f ms\n", tempo_ms); /* Mostra o tempo em milissegundos. */
     printf("  Comparações  : %lu\n", metricas.comparacoes); /* Mostra o total de comparações. */
-    printf("  Trocas       : %lu\n", metricas.trocas); /* Mostra o total de trocas. */
+    printf("  Trocas       : %lu\n\n", metricas.trocas); /* Mostra o total de trocas e deixa uma linha em branco. */
     free(copia); /* Libera o vetor de trabalho. */
 }
 

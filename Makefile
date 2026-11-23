@@ -33,10 +33,10 @@ clean:
 	rm -f sort_main $(MAIN_OBJ) $(OBJETOS) $(MAIN_OBJ:.o=.d) $(OBJETOS:.o=.d)
 
 # Compila e executa o ponto inicial da suíte de testes.
-test_basic: tests/test_basic.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $<
+test_basic: tests/test_basic.c src/basicos/bubble.o
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $^
 
-# Executa os testes; os casos reais serão adicionados ainda.
+# Executa os testes automatizados disponíveis.
 test: test_basic
 	./test_basic
 
