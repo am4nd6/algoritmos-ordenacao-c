@@ -1,29 +1,29 @@
         -:    0:Source:src/basicos/selection.c
         -:    0:Graph:src/basicos/selection.gcno
         -:    0:Data:src/basicos/selection.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "../algoritmos.h" /* Importa o contrato das funções de ordenação. */
         -:    2:
-        5:    3:void selectionSort(int v[], int n, Metricas *m) /* Função pública do Selection Sort. */
+       10:    3:void selectionSort(int v[], int n, Metricas *m) /* Função pública do Selection Sort. */
         -:    4:{
         -:    5:    int i; /* Posição que receberá o menor elemento restante. */
         -:    6:
-       19:    7:    for (i = 0; i < n - 1; i++) { /* Percorre as posições que serão preenchidas. */
-       14:    8:        int menor = i; /* Assume inicialmente que o primeiro restante é o menor. */
+       38:    7:    for (i = 0; i < n - 1; i++) { /* Percorre as posições que serão preenchidas. */
+       28:    8:        int menor = i; /* Assume inicialmente que o primeiro restante é o menor. */
         -:    9:        int j; /* Índice usado para procurar um valor menor. */
         -:   10:
-       46:   11:        for (j = i + 1; j < n; j++) { /* Procura no restante do vetor. */
-       32:   12:            m->comparacoes++; /* Conta somente a comparação entre dois valores. */
-       32:   13:            if (v[j] < v[menor]) { /* Verifica se encontrou um novo menor. */
-       12:   14:                menor = j; /* Guarda a posição do novo menor valor. */
+       92:   11:        for (j = i + 1; j < n; j++) { /* Procura no restante do vetor. */
+       64:   12:            m->comparacoes++; /* Conta somente a comparação entre dois valores. */
+       64:   13:            if (v[j] < v[menor]) { /* Verifica se encontrou um novo menor. */
+       24:   14:                menor = j; /* Guarda a posição do novo menor valor. */
         -:   15:            }
         -:   16:        }
         -:   17:
-       14:   18:        if (menor != i) { /* Evita trocar um elemento consigo mesmo. */
-        8:   19:            int temporario = v[i]; /* Guarda o valor da posição atual. */
-        8:   20:            v[i] = v[menor]; /* Coloca o menor valor na posição correta. */
-        8:   21:            v[menor] = temporario; /* Coloca o valor antigo na posição encontrada. */
-        8:   22:            m->trocas++; /* Conta a permuta efetiva. */
+       28:   18:        if (menor != i) { /* Evita trocar um elemento consigo mesmo. */
+       16:   19:            int temporario = v[i]; /* Guarda o valor da posição atual. */
+       16:   20:            v[i] = v[menor]; /* Coloca o menor valor na posição correta. */
+       16:   21:            v[menor] = temporario; /* Coloca o valor antigo na posição encontrada. */
+       16:   22:            m->trocas++; /* Conta a permuta efetiva. */
         -:   23:        }
         -:   24:    }
-        5:   25:}
+       10:   25:}
