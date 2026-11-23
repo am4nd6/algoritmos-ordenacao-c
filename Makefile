@@ -46,7 +46,7 @@ bench_sort: src/bench.c $(OBJETOS)
 
 # Prepara a execução futura do benchmark.
 bench: bench_sort
-	@echo "Benchmark real pendente das implementacoes dos algoritmos."
+	./bench_sort > docs/resultados.csv
 
 # Executa a análise estática dos fontes existentes.
 cppcheck:

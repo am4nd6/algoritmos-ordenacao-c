@@ -79,7 +79,7 @@ static int testar_quick_grande(const char *nome, int *vetor, int n) /* Testa Qui
 
 int main(void) /* Ponto de entrada provisório dos testes. */
 {
-    const int caso_misto[] = {5, 3, 8, 4, 2}; /* Entrada principal do enunciado da fase. */
+    const int caso_misto[] = {5, 3, 8, 4, 2}; /* Entrada principal. */
     const int esperado_misto[] = {2, 3, 4, 5, 8}; /* Resultado ordenado esperado. */
     const int caso_duplicado[] = {3, 1, 3, 2, 1}; /* Entrada com valores repetidos. */
     const int esperado_duplicado[] = {1, 1, 2, 3, 3}; /* Resultado que preserva duplicatas. */
