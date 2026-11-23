@@ -174,26 +174,9 @@ O protocolo exigirá seis algoritmos, três tipos de entrada (`aleatorio`, `cres
 
 Isso produz 81 combinações, 405 ordenações medidas e 82 linhas físicas no CSV. Geração, cópia dos vetores e escrita do CSV ficarão fora da medição de tempo. O arquivo só será criado com dados de execução real.
 
-## Documentação do projeto
-
-| Arquivo | Finalidade |
-|---|---|
-| `docs/contexto.md` | Contratos, restrições, avaliação e plano |
-| `docs/ambiente.md` | Evidências do WSL e das ferramentas |
-| `docs/fase0-auditoria.md` | Auditoria da Fase 0 |
-| `docs/fase3-estrutura.md` | Evidências da estrutura inicial |
-| `docs/uso-ia.md` | Registro real do uso de IA |
-| `docs/analise.md` | Análise dos números reais do benchmark |
-| `docs/cobertura.md` | Percentuais individuais e global de cobertura |
-| `docs/cppcheck.md` | Interpretação da análise estática |
-| `docs/perfil.md` | Interpretação do profiling |
-| `docs/resultados.csv` | Resultados experimentais reais |
-
-Relatórios dependentes de execução não devem conter valores fictícios ou conclusões definitivas antes das ferramentas serem executadas.
-
 ## Uso de IA e autoria
 
-A IA é usada como apoio didático, revisão e explicação. A dupla deve compreender, adaptar e testar qualquer sugestão utilizada. 
+A IA é usada como apoio didático, revisão e explicação. 
 
 ## Referências
 
