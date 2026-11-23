@@ -1,0 +1,27 @@
+        -:    0:Source:src/basicos/insertion.c
+        -:    0:Graph:src/basicos/insertion.gcno
+        -:    0:Data:src/basicos/insertion.gcda
+        -:    0:Runs:1
+        -:    1:#include "../algoritmos.h" /* Importa o contrato comum dos algoritmos. */
+        -:    2:
+        6:    3:void insertionSort(int v[], int n, Metricas *m) /* Função pública do Insertion Sort. */
+        -:    4:{
+        -:    5:    int i; /* Índice da chave que será inserida. */
+        -:    6:
+       20:    7:    for (i = 1; i < n; i++) { /* O primeiro elemento sozinho já forma um prefixo ordenado. */
+       14:    8:        int chave = v[i]; /* Guarda o valor que será inserido. */
+       14:    9:        int j = i - 1; /* Começa comparando com o último elemento do prefixo. */
+        -:   10:
+       33:   11:        while (j >= 0) { /* Continua enquanto ainda houver posição para comparar. */
+       27:   12:            m->comparacoes++; /* Conta a comparação entre o prefixo e a chave. */
+       27:   13:            if (v[j] <= chave) { /* Para quando a chave já está após um valor menor ou igual. */
+        8:   14:                break; /* Evita deslocar elementos que já estão na ordem certa. */
+        -:   15:            }
+       19:   16:            v[j + 1] = v[j]; /* Desloca o valor maior uma posição para a direita. */
+       19:   17:            m->trocas++; /* Conta o deslocamento como movimentação. */
+       19:   18:            j--; /* Avança para a posição anterior do prefixo. */
+        -:   19:        }
+       14:   20:        v[j + 1] = chave; /* Insere a chave na posição encontrada. */
+       14:   21:        m->trocas++; /* Conta a cópia da chave para sua posição final. */
+        -:   22:    }
+        6:   23:}

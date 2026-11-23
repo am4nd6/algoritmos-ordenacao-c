@@ -1,0 +1,68 @@
+        -:    0:Source:src/avancados/heap.c
+        -:    0:Graph:src/avancados/heap.gcno
+        -:    0:Data:src/avancados/heap.gcda
+        -:    0:Runs:1
+        -:    1:#include "../algoritmos.h" /* Importa o contrato dos algoritmos. */
+        -:    2:
+        6:    3:void heapSort(int v[], int n, Metricas *m) /* Função pública do Heap Sort. */
+        -:    4:{
+        -:    5:    int inicio; /* Índice usado para construir o heap. */
+        -:    6:    int fim; /* Último índice da região ainda não ordenada. */
+        -:    7:
+        6:    8:    if (n <= 1) { /* Vetores vazios ou unitários já estão ordenados. */
+        2:    9:        return; /* Evita acessar posições inválidas. */
+        -:   10:    }
+        -:   11:
+       12:   12:    for (inicio = n / 2 - 1; inicio >= 0; inicio--) { /* Ajusta cada pai para construir o max-heap. */
+        8:   13:        int raiz = inicio; /* Começa o ajuste pela raiz do subárvore. */
+       14:   14:        while (2 * raiz + 1 < n) { /* Continua enquanto existir filho esquerdo. */
+        9:   15:            int maior = 2 * raiz + 1; /* Calcula o índice do filho esquerdo. */
+        9:   16:            int direito = maior + 1; /* Calcula o índice do filho direito. */
+        -:   17:
+        9:   18:            m->comparacoes++; /* Compara o filho direito com o maior candidato. */
+        9:   19:            if (direito < n && v[direito] > v[maior]) { /* Escolhe o maior filho dentro do limite. */
+        2:   20:                maior = direito; /* Atualiza o índice do maior filho. */
+        -:   21:            }
+        9:   22:            m->comparacoes++; /* Compara o maior filho com a raiz atual. */
+        9:   23:            if (v[raiz] >= v[maior]) { /* O heap já está correto neste caminho. */
+        3:   24:                break; /* Encerra o ajuste. */
+        -:   25:            }
+        -:   26:            {
+        6:   27:                int temporario = v[raiz]; /* Guarda a raiz durante a troca. */
+        6:   28:                v[raiz] = v[maior]; /* Coloca o maior valor na raiz. */
+        6:   29:                v[maior] = temporario; /* Move a raiz antiga para o filho. */
+        6:   30:                m->trocas++; /* Conta a permuta efetiva. */
+        -:   31:            }
+        6:   32:            raiz = maior; /* Continua ajustando a posição para baixo. */
+        -:   33:        }
+        -:   34:    }
+        -:   35:
+       18:   36:    for (fim = n - 1; fim > 0; fim--) { /* Retira o maior elemento a cada passagem. */
+       14:   37:        int temporario = v[0]; /* Guarda a raiz do heap. */
+       14:   38:        v[0] = v[fim]; /* Move o último elemento para a raiz. */
+       14:   39:        v[fim] = temporario; /* Coloca o maior elemento na posição final. */
+       14:   40:        m->trocas++; /* Conta a permuta de extração. */
+        -:   41:
+        -:   42:        {
+       14:   43:            int raiz = 0; /* Reinicia o ajuste pela raiz. */
+       22:   44:            while (2 * raiz + 1 < fim) { /* Usa somente a região ativa do heap. */
+       10:   45:                int maior = 2 * raiz + 1; /* Calcula o filho esquerdo. */
+       10:   46:                int direito = maior + 1; /* Calcula o filho direito. */
+        -:   47:
+       10:   48:                m->comparacoes++; /* Compara os dois filhos candidatos. */
+       10:   49:                if (direito < fim && v[direito] > v[maior]) { /* Verifica se o direito é maior. */
+        3:   50:                    maior = direito; /* Seleciona o filho direito. */
+        -:   51:                }
+       10:   52:                m->comparacoes++; /* Compara a raiz com o maior filho. */
+       10:   53:                if (v[raiz] >= v[maior]) { /* A propriedade de max-heap foi restaurada. */
+        2:   54:                    break; /* Encerra este ajuste. */
+        -:   55:                }
+        8:   56:                temporario = v[raiz]; /* Guarda a raiz durante a troca. */
+        8:   57:                v[raiz] = v[maior]; /* Move o maior filho para cima. */
+        8:   58:                v[maior] = temporario; /* Move a raiz para baixo. */
+        8:   59:                m->trocas++; /* Conta a permuta efetiva. */
+        8:   60:                raiz = maior; /* Continua descendo no heap. */
+        -:   61:            }
+        -:   62:        }
+        -:   63:    }
+        -:   64:}

@@ -1,0 +1,27 @@
+        -:    0:Source:src/basicos/bubble.c
+        -:    0:Graph:src/basicos/bubble.gcno
+        -:    0:Data:src/basicos/bubble.gcda
+        -:    0:Runs:1
+        -:    1:#include "../algoritmos.h" /* Importa a assinatura e o tipo de métricas. */
+        -:    2:
+        6:    3:void bubbleSort(int v[], int n, Metricas *m) /* Função pública do Bubble Sort. */
+        -:    4:{
+        -:    5:    int i; /* Controla as passadas pelo vetor. */
+        -:    6:    int j; /* Controla a comparação entre vizinhos. */
+        -:    7:
+        6:    8:    if (n <= 1) { /* Vetores vazios ou unitários já estão ordenados. */
+        2:    9:        return; /* Sai sem acessar posições inválidas. */
+        -:   10:    }
+        -:   11:
+       18:   12:    for (i = 0; i < n - 1; i++) { /* Faz todas as passadas da versão clássica. */
+       46:   13:        for (j = 0; j < n - 1 - i; j++) { /* Compara vizinhos ainda não posicionados. */
+       32:   14:            m->comparacoes++; /* Conta somente a comparação entre dois valores. */
+       32:   15:            if (v[j] > v[j + 1]) { /* Verifica se os vizinhos estão invertidos. */
+       19:   16:                int temporario = v[j]; /* Guarda o primeiro valor durante a troca. */
+       19:   17:                v[j] = v[j + 1]; /* Move o menor valor para a esquerda. */
+       19:   18:                v[j + 1] = temporario; /* Move o maior valor para a direita. */
+       19:   19:                m->trocas++; /* Conta uma permuta efetiva. */
+        -:   20:            }
+        -:   21:        }
+        -:   22:    }
+        -:   23:}

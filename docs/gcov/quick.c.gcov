@@ -1,0 +1,60 @@
+        -:    0:Source:src/avancados/quick.c
+        -:    0:Graph:src/avancados/quick.gcno
+        -:    0:Data:src/avancados/quick.gcda
+        -:    0:Runs:1
+        -:    1:#include "../algoritmos.h" /* Importa o contrato comum dos algoritmos. */
+        -:    2:
+    40013:    3:static int particionar(int v[], int inicio, int fim, Metricas *m) /* Divide o intervalo em torno de um pivô central. */
+        -:    4:{
+    40013:    5:    int i = inicio; /* Caminha da esquerda para a direita. */
+    40013:    6:    int j = fim; /* Caminha da direita para a esquerda. */
+    40013:    7:    int pivo = v[inicio + (fim - inicio) / 2]; /* Escolhe o elemento do meio como pivô. */
+        -:    8:
+   202494:    9:    while (i <= j) { /* Continua até os índices se cruzarem. */
+        -:   10:        while (1) { /* Procura um valor que deve ficar depois do pivô. */
+   304838:   11:            m->comparacoes++; /* Conta a comparação entre um valor e o pivô. */
+   304838:   12:            if (!(v[i] < pivo)) { /* Para quando o valor não é menor que o pivô. */
+   122468:   13:                break; /* Evita ultrapassar a posição correta. */
+        -:   14:            }
+   182370:   15:            i++; /* Avança o índice esquerdo. */
+        -:   16:        }
+        -:   17:        while (1) { /* Procura um valor que deve ficar antes do pivô. */
+   329012:   18:            m->comparacoes++; /* Conta a comparação entre um valor e o pivô. */
+   329012:   19:            if (!(v[j] > pivo)) { /* Para quando o valor não é maior que o pivô. */
+   122468:   20:                break; /* Evita ultrapassar a posição correta. */
+        -:   21:            }
+   206544:   22:            j--; /* Recuo do índice direito. */
+        -:   23:        }
+   122468:   24:        if (i <= j) { /* Os dois valores podem ser corrigidos ou são iguais ao pivô. */
+   119561:   25:            if (i != j) { /* Evita contabilizar troca de uma posição consigo mesma. */
+    92338:   26:                int temporario = v[i]; /* Guarda o valor esquerdo. */
+    92338:   27:                v[i] = v[j]; /* Coloca o valor direito à esquerda. */
+    92338:   28:                v[j] = temporario; /* Coloca o valor esquerdo à direita. */
+    92338:   29:                m->trocas++; /* Conta a permuta efetiva. */
+        -:   30:            }
+   119561:   31:            i++; /* Garante avanço mesmo com valores repetidos. */
+   119561:   32:            j--; /* Garante redução do intervalo. */
+        -:   33:        }
+        -:   34:    }
+    40013:   35:    return i; /* Retorna o primeiro índice da parte direita. */
+        -:   36:}
+        -:   37:
+    80035:   38:static void ordenar_intervalo(int v[], int inicio, int fim, Metricas *m) /* Ordena recursivamente um intervalo. */
+        -:   39:{
+        -:   40:    int proxima; /* Ponto que separa as duas partes. */
+        -:   41:
+    80035:   42:    if (inicio >= fim) { /* Um intervalo de até um elemento já está ordenado. */
+    40022:   43:        return; /* Encerra a recursão. */
+        -:   44:    }
+    40013:   45:    proxima = particionar(v, inicio, fim, m); /* Divide o intervalo pelo pivô central. */
+    40013:   46:    ordenar_intervalo(v, inicio, proxima - 1, m); /* Ordena a parte esquerda. */
+    40013:   47:    ordenar_intervalo(v, proxima, fim, m); /* Ordena a parte direita. */
+        -:   48:}
+        -:   49:
+       11:   50:void quickSort(int v[], int n, Metricas *m) /* Função pública do Quick Sort. */
+        -:   51:{
+       11:   52:    if (n <= 1) { /* Vetores vazios ou unitários já estão ordenados. */
+        2:   53:        return; /* Evita acessar posições inválidas. */
+        -:   54:    }
+        9:   55:    ordenar_intervalo(v, 0, n - 1, m); /* Ordena o vetor inteiro. */
+        -:   56:}

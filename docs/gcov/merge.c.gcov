@@ -1,0 +1,77 @@
+        -:    0:Source:src/avancados/merge.c
+        -:    0:Graph:src/avancados/merge.gcno
+        -:    0:Data:src/avancados/merge.gcda
+        -:    0:Runs:1
+        -:    1:#include <stdlib.h> /* Fornece malloc, free e NULL para a memória auxiliar. */
+        -:    2:
+        -:    3:#include "../algoritmos.h" /* Importa o contrato e o tipo Metricas. */
+        -:    4:
+       14:    5:static void intercalar(int v[], int auxiliar[], int inicio, int meio, int fim, Metricas *m) /* Junta duas partes já ordenadas. */
+        -:    6:{
+       14:    7:    int esquerda = inicio; /* Primeiro índice da metade esquerda. */
+       14:    8:    int direita = meio + 1; /* Primeiro índice da metade direita. */
+       14:    9:    int destino = inicio; /* Posição que receberá o próximo menor valor. */
+        -:   10:
+       36:   11:    while (esquerda <= meio && direita <= fim) { /* Continua enquanto as duas metades têm valores. */
+       22:   12:        m->comparacoes++; /* Conta a comparação entre os dois valores candidatos. */
+       22:   13:        if (v[esquerda] <= v[direita]) { /* Escolhe a esquerda em empate para manter estabilidade. */
+       10:   14:            auxiliar[destino] = v[esquerda]; /* Copia o valor esquerdo para o buffer. */
+       10:   15:            esquerda++; /* Avança na metade esquerda. */
+        -:   16:        } else {
+       12:   17:            auxiliar[destino] = v[direita]; /* Copia o valor direito para o buffer. */
+       12:   18:            direita++; /* Avança na metade direita. */
+        -:   19:        }
+       22:   20:        m->trocas++; /* Conta a cópia feita no buffer auxiliar. */
+       22:   21:        destino++; /* Avança a posição de destino. */
+        -:   22:    }
+        -:   23:
+       26:   24:    while (esquerda <= meio) { /* Copia os valores restantes da esquerda. */
+       12:   25:        auxiliar[destino] = v[esquerda]; /* Transfere o valor restante. */
+       12:   26:        esquerda++; /* Avança na metade esquerda. */
+       12:   27:        destino++; /* Avança no buffer. */
+       12:   28:        m->trocas++; /* Conta a cópia. */
+        -:   29:    }
+        -:   30:
+       20:   31:    while (direita <= fim) { /* Copia os valores restantes da direita. */
+        6:   32:        auxiliar[destino] = v[direita]; /* Transfere o valor restante. */
+        6:   33:        direita++; /* Avança na metade direita. */
+        6:   34:        destino++; /* Avança no buffer. */
+        6:   35:        m->trocas++; /* Conta a cópia. */
+        -:   36:    }
+        -:   37:
+       54:   38:    for (destino = inicio; destino <= fim; destino++) { /* Devolve a parte ordenada ao vetor original. */
+       40:   39:        v[destino] = auxiliar[destino]; /* Copia o resultado para o vetor do chamador. */
+       40:   40:        m->trocas++; /* Conta a cópia de retorno. */
+        -:   41:    }
+       14:   42:}
+        -:   43:
+       32:   44:static void ordenar_intervalo(int v[], int auxiliar[], int inicio, int fim, Metricas *m) /* Ordena um intervalo recursivamente. */
+        -:   45:{
+        -:   46:    int meio; /* Índice que divide o intervalo em duas partes. */
+        -:   47:
+       32:   48:    if (inicio >= fim) { /* Um intervalo com zero ou um elemento já está ordenado. */
+       18:   49:        return; /* Encerra a recursão sem acessar fora do vetor. */
+        -:   50:    }
+        -:   51:
+       14:   52:    meio = inicio + (fim - inicio) / 2; /* Calcula o meio sem somar índices grandes diretamente. */
+       14:   53:    ordenar_intervalo(v, auxiliar, inicio, meio, m); /* Ordena a metade esquerda. */
+       14:   54:    ordenar_intervalo(v, auxiliar, meio + 1, fim, m); /* Ordena a metade direita. */
+       14:   55:    intercalar(v, auxiliar, inicio, meio, fim, m); /* Intercala as duas metades. */
+        -:   56:}
+        -:   57:
+        6:   58:void mergeSort(int v[], int n, Metricas *m) /* Função pública do Merge Sort. */
+        -:   59:{
+        -:   60:    int *auxiliar; /* Buffer usado para intercalar as partes. */
+        -:   61:
+        6:   62:    if (n <= 1) { /* Vetores vazios ou unitários já estão ordenados. */
+        2:   63:        return; /* Evita alocação e acesso inválido. */
+        -:   64:    }
+        -:   65:
+        4:   66:    auxiliar = malloc((size_t)n * sizeof(*auxiliar)); /* Aloca o buffer dentro da função pública. */
+        4:   67:    if (auxiliar == NULL) { /* Confere falha de memória antes de usar o buffer. */
+    #####:   68:        return; /* Mantém o vetor original intacto em caso de falha. */
+        -:   69:    }
+        -:   70:
+        4:   71:    ordenar_intervalo(v, auxiliar, 0, n - 1, m); /* Divide, ordena e intercala todo o vetor. */
+        4:   72:    free(auxiliar); /* Libera o buffer antes de retornar. */
+        -:   73:}
