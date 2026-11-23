@@ -62,5 +62,16 @@ coverage:
 	mv ./*.c.gcov docs/gcov/ 2>/dev/null || true
 	@echo "Relatorios gcov gerados em docs/gcov."
 
-profile:
-	@echo "Profiling gprof pendente das implementacoes reais."
+N ?= 50000
+ALG ?= quick
+
+# Compila uma versão separada, sem otimização, para o gprof.
+sort_profile: src/main.c $(ALGORITMOS)
+	$(CC) -std=c11 -Wall -Wextra -O0 -g -pg $(CPPFLAGS) -o $@ $^
+
+# Executa uma carga controlada e salva o perfil bruto.
+profile: sort_profile
+	rm -f gmon.out docs/perfil_bruto.txt
+	./sort_profile $(N) $(ALG) > /dev/null
+	gprof sort_profile gmon.out > docs/perfil_bruto.txt
+	@echo "Perfil salvo em docs/perfil_bruto.txt (N=$(N), ALG=$(ALG))."
