@@ -50,7 +50,7 @@ bench: bench_sort
 
 # Executa a análise estática dos fontes existentes.
 cppcheck:
-	cppcheck --enable=warning,style,performance,portability --suppress=missingIncludeSystem src tests
+	cppcheck --enable=warning,style,performance,portability --inline-suppr --suppress=missingIncludeSystem src tests > docs/cppcheck_bruto.txt 2>&1
 
 # Estes alvos serão completados quando houver testes e implementações reais.
 coverage:
