@@ -163,7 +163,58 @@ O esperado é `82 docs/resultados.csv`: cabeçalho e 81 combinações. O último
 
 O segundo `make clean` restaura as flags normais após a cobertura.
 
-## 11. Limpeza e Git
+## 11. Atualizar o projeto com o commit mais recente
+
+Antes de atualizar, entre na pasta do projeto e confira se há alterações locais:
+
+    cd ~/projetos/algoritmos-ordenacao-c
+    git status
+
+Se não houver arquivos modificados, baixe as mudanças da branch principal:
+
+    git pull origin main
+
+`git pull` busca os commits mais recentes no GitHub e os incorpora à cópia local. Depois da atualização, confira novamente:
+
+    git log --oneline -5
+    git status
+
+Se o projeto usar outra branch, descubra a branch atual com `git branch --show-current` e substitua `main` pelo nome correto.
+
+### Se houver alterações locais
+
+Não execute `git pull` sem entender o que acontecerá com alterações locais. Primeiro veja as diferenças:
+
+    git diff
+
+Se quiser manter as alterações temporariamente, guarde-as:
+
+    git stash push -m "alteracoes locais antes de atualizar"
+    git pull origin main
+    git stash pop
+
+Se as alterações já estiverem prontas e forem autoria sua, faça um commit antes de atualizar:
+
+    git add caminho/do/arquivo
+    git commit -m "tipo: descreve a alteracao"
+    git pull origin main
+
+### Se aparecer um conflito
+
+O Git informará quais arquivos têm conflito. Abra esses arquivos, procure as marcas `<<<<<<<`, `=======` e `>>>>>>>`, escolha a versão correta e remova as marcas. Depois execute:
+
+    git add arquivo-com-conflito
+    git commit -m "fix: resolve conflito de atualizacao"
+
+Se não souber resolver, não apague arquivos nem use comandos destrutivos. Pare e peça ajuda à dupla.
+
+Depois de qualquer atualização, recompile e teste:
+
+    make clean
+    make
+    make test
+
+## 12. Limpeza e Git
 
     make clean
     rm -f test_basic bench_sort sort_profile gmon.out
@@ -180,7 +231,7 @@ Não remova relatórios em `docs/`. Depois de revisar cuidadosamente, um integra
 
 Nunca adicione senhas, tokens ou chaves privadas.
 
-## 12. Problemas comuns
+## 13. Problemas comuns
 
 Para `command not found`:
 
