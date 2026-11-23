@@ -1,8 +1,8 @@
 # Prerequisites
 *.d
 /*.gcov
-/*.gcda
-/*.gcno
+*.gcda
+*.gcno
 /gmon.out
 /sort_main
 /sort_profile

@@ -54,7 +54,13 @@ cppcheck:
 
 # Estes alvos serão completados quando houver testes e implementações reais.
 coverage:
-	@echo "Cobertura gcov pendente das implementacoes e testes reais."
+	mkdir -p docs/gcov
+	rm -f docs/gcov/*.gcov docs/gcov/resumo.txt
+	$(MAKE) clean
+	$(MAKE) CFLAGS="-std=c11 -Wall -Wextra --coverage -g -O0 -MMD -MP" test
+	for arquivo in src/basicos/bubble.c src/basicos/selection.c src/basicos/insertion.c src/avancados/merge.c src/avancados/quick.c src/avancados/heap.c; do gcov -o "$$(dirname "$$arquivo")" "$$arquivo"; done > docs/gcov/resumo.txt 2>&1
+	mv ./*.c.gcov docs/gcov/ 2>/dev/null || true
+	@echo "Relatorios gcov gerados em docs/gcov."
 
 profile:
 	@echo "Profiling gprof pendente das implementacoes reais."
