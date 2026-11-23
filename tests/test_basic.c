@@ -157,5 +157,11 @@ int main(void) /* Ponto de entrada provisório dos testes. */
         free(decrescente); /* Libera a entrada decrescente. */
         free(repetido); /* Libera a entrada repetida. */
     }
+    falhas += testar_algoritmo("Heap com vetor misto", heapSort, caso_misto, esperado_misto, 5, -1); /* Testa tamanho ímpar. */
+    falhas += testar_algoritmo("Heap com duplicatas", heapSort, caso_duplicado, esperado_duplicado, 5, -1); /* Preserva valores repetidos. */
+    falhas += testar_algoritmo("Heap com vetor crescente", heapSort, caso_ordenado, caso_ordenado, 4, -1); /* Testa tamanho par. */
+    falhas += testar_algoritmo("Heap com vetor decrescente", heapSort, caso_inverso, esperado_inverso, 4, -1); /* Testa extrações. */
+    falhas += testar_algoritmo("Heap com vetor vazio", heapSort, caso_vazio, caso_vazio, 0, 0); /* Caso-base vazio. */
+    falhas += testar_algoritmo("Heap com vetor unitario", heapSort, caso_unico, caso_unico, 1, 0); /* Caso-base unitário. */
     return falhas == 0 ? 0 : 1; /* Retorna erro se algum teste falhou. */
 }
