@@ -80,8 +80,14 @@ algoritmos-ordenacao-c/
 │   ├── basicos/{bubble,selection,insertion}.c
 │   └── avancados/{merge,quick,heap}.c
 ├── tests/test_basic.c
-
-
+├── docs/
+│   ├── analise.md
+│   ├── cobertura.md
+│   ├── cppcheck.md
+│   ├── como-rodar-projeto.md
+│   ├── perfil.md
+│   ├── resultados.csv
+│   └── uso-ia.md
 ```
 
 ## Instalação
@@ -131,7 +137,7 @@ Exemplo:
 ./sort_main 10 bubble
 ```
 
-Saída atual:
+Exemplo de saída:
 
 ```text
 Bubble Sort
@@ -140,7 +146,7 @@ Bubble Sort
   Trocas       : 0
 ```
 
-Esse zero é esperado enquanto as implementações não estão concluídas e não comprova a correção do algoritmo. A CLI deverá gerar dados com `srand(42)`, medir `clock()` e imprimir tempo, comparações e trocas.
+O programa gera dados com `srand(42)`, mede a ordenação com `clock()` e imprime tempo, comparações e trocas.
 
 ## Alvos do Makefile
 
@@ -148,23 +154,23 @@ Esse zero é esperado enquanto as implementações não estão concluídas e nã
 |---|---|---|
 | `make` | Disponível | Compilar `sort_main` |
 | `make clean` | Disponível | Remover objetos, dependências e binário |
-| `make test` | Disponível, testes provisórios | Compilar e executar `test_basic` |
-| `make coverage` | Preparado, relatório pendente | Gerar cobertura com gcov |
+| `make test` | Disponível | Compilar e executar `test_basic` |
+| `make coverage` | Disponível | Gerar cobertura com gcov |
 | `make cppcheck` | Disponível | Executar análise estática |
-| `make profile` | Preparado, relatório pendente | Gerar perfil com gprof usando `-O0 -pg` |
-| `make bench` | Disponível, benchmark pendente | Preparar `bench_sort` |
+| `make profile` | Disponível | Gerar perfil com gprof usando `-O0 -pg` |
+| `make bench` | Disponível | Executar benchmark e gerar `docs/resultados.csv` |
 
 O benchmark não deve ser executado automaticamente por `make`, pois exige medição controlada.
 
 ## Testes e qualidade
 
-`tests/test_basic.c` existe como ponto inicial, mas os testes reais ainda serão implementados. A suíte final deverá ter pelo menos dois casos para cada algoritmo, imprimir `PASSOU` ou `FALHOU`, retornar código diferente de zero quando houver falha, verificar ordenação e preservação do multiconjunto e cobrir entradas vazias, unitárias, ordenadas, invertidas, repetidas, negativas e aleatórias.
+`tests/test_basic.c` contém a suíte automatizada dos seis algoritmos. Ela imprime `PASSOU` ou `FALHOU`, retorna código diferente de zero quando há falha, verifica ordenação e preservação do multiconjunto e cobre entradas vazias, unitárias, ordenadas, invertidas, repetidas, negativas e aleatórias.
 
-O cppcheck foi executado sobre `src` e `tests` na estrutura inicial, sem apontamentos. Isso não substitui a análise final após a implementação.
+O cppcheck foi executado sobre `src` e `tests`, sem apontamentos; a saída bruta está em [`docs/cppcheck_bruto.txt`](docs/cppcheck_bruto.txt) e a interpretação em [`docs/cppcheck.md`](docs/cppcheck.md).
 
 ## Benchmark planejado
 
-O arquivo final será `docs/resultados.csv`, com o cabeçalho:
+O arquivo produzido é [`docs/resultados.csv`](docs/resultados.csv), com o cabeçalho:
 
 ```csv
 algoritmo,tipo,n,tempo_ms,comparacoes,trocas
@@ -172,14 +178,27 @@ algoritmo,tipo,n,tempo_ms,comparacoes,trocas
 
 O protocolo exigirá seis algoritmos, três tipos de entrada (`aleatorio`, `crescente`, `decrescente`), tamanhos 1.000, 5.000, 10.000 e 50.000 para todos, e 500.000 somente para Merge, Quick e Heap. Cada combinação terá cinco repetições.
 
-Isso produz 81 combinações, 405 ordenações medidas e 82 linhas físicas no CSV. Geração, cópia dos vetores e escrita do CSV ficarão fora da medição de tempo. O arquivo só será criado com dados de execução real.
+Isso produz 81 combinações, 405 ordenações medidas e 82 linhas físicas no CSV. Geração, cópia dos vetores e escrita do CSV ficam fora da medição de tempo. O arquivo foi criado com dados de execução real.
 
 ## Uso de IA e autoria
 
-A IA é usada como apoio didático, revisão e explicação. 
+A IA foi usada como apoio didático, revisão e explicação. Os prompts, sugestões aproveitadas e verificações estão registrados em [`docs/uso-ia.md`](docs/uso-ia.md).
+
+## Relatórios
+
+- [Guia completo para rodar o projeto](docs/como-rodar-projeto.md)
+
+- [Análise experimental](docs/analise.md)
+- [Cobertura com gcov](docs/cobertura.md)
+- [Perfil com gprof](docs/perfil.md)
+- [Análise do cppcheck](docs/cppcheck.md)
+- [Relatório bruto do gprof](docs/perfil_bruto.txt)
+- [Resultados do benchmark](docs/resultados.csv)
+- [Registro de uso de IA](docs/uso-ia.md)
 
 ## Referências
 
+- [Repositório no GitHub](https://github.com/am4nd6/algoritmos-ordenacao-c)
 - [Especificação oficial](https://lambdageo-edu.github.io/book-estrutura-de-dados/laboratorios/02_trabalho_pratico_ordenacao/)
 - [Ordenação básica](https://lambdageo-edu.github.io/book-estrutura-de-dados/aulas/12_ordenacao_basica/)
 - [Ordenação avançada](https://lambdageo-edu.github.io/book-estrutura-de-dados/aulas/13_ordenacao_avancada/)
