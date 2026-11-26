@@ -141,12 +141,16 @@ Exemplo de saída:
 
 ```text
 Bubble Sort
+  Antes: [71876166, 708592740, 1483128881, ...]
+  Depois: [71876166, ... , 2145174067]
   Tempo        : 0.001 ms
-  Comparações  : 0
-  Trocas       : 0
+  Comparações  : 45
+  Trocas       : 20
 ```
 
-O programa gera dados com `srand(42)`, mede a ordenação com `clock()` e imprime tempo, comparações e trocas.
+O programa gera dados com `srand(42)`, mostra o vetor antes e depois dentro de
+cada caso de ordenação,
+mede a ordenação com `clock()` e imprime tempo, comparações e trocas.
 
 ## Alvos do Makefile
 

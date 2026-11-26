@@ -53,6 +53,20 @@ static void preencher_vetor(int *vetor, int n) /* Preenche o vetor original com 
     }
 }
 
+static void imprimir_vetor(const char *rotulo, const int *vetor, int n) /* Mostra os elementos do vetor. */
+{
+    int i; /* Índice da posição atual. */
+
+    printf("  %s: [", rotulo); /* Imprime o rótulo e abre a lista. */
+    for (i = 0; i < n; i++) { /* Visita todas as posições. */
+        if (i > 0) { /* Separa os elementos depois do primeiro. */
+            printf(", "); /* Imprime o separador. */
+        }
+        printf("%d", vetor[i]); /* Imprime o valor atual. */
+    }
+    printf("]\n"); /* Fecha a lista. */
+}
+
 static void executar_algoritmo(const OpcaoAlgoritmo *opcao, const int *original, int n) /* Executa uma cópia independente. */
 {
     int *copia; /* Vetor que o algoritmo poderá modificar. */
@@ -67,11 +81,13 @@ static void executar_algoritmo(const OpcaoAlgoritmo *opcao, const int *original,
         return; /* Evita usar um ponteiro inválido. */
     }
     memcpy(copia, original, (size_t)n * sizeof(*copia)); /* Copia antes da medição. */
+    printf("\n%c%s Sort\n", (char)toupper((unsigned char)opcao->nome[0]), opcao->nome + 1); /* Mostra o nome do algoritmo. */
+    imprimir_vetor("Antes", original, n); /* Mostra a entrada deste caso. */
     inicio = clock(); /* Começa a medir somente a função de ordenação. */
     opcao->funcao(copia, n, &metricas); /* Chama o algoritmo escolhido. */
     fim = clock(); /* Termina a medição. */
     tempo_ms = 1000.0 * (double)(fim - inicio) / (double)CLOCKS_PER_SEC; /* Converte ticks em ms. */
-    printf("\n%c%s Sort\n", (char)toupper((unsigned char)opcao->nome[0]), opcao->nome + 1); /* Mostra o nome com aparência profissional e separa os resultados. */
+    imprimir_vetor("Depois", copia, n); /* Mostra o vetor após a ordenação. */
     printf("  Tempo        : %.3f ms\n", tempo_ms); /* Mostra o tempo em milissegundos. */
     printf("  Comparações  : %lu\n", metricas.comparacoes); /* Mostra o total de comparações. */
     printf("  Trocas       : %lu\n\n", metricas.trocas); /* Mostra o total de trocas e deixa uma linha em branco. */

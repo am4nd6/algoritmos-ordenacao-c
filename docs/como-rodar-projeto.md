@@ -82,6 +82,17 @@ Execute todos sobre cópias da mesma entrada:
 
     ./sort_main 10
 
+Esse comando mostra, dentro de cada caso, o vetor original (`Antes`) e o vetor
+ordenado (`Depois`), além do tempo, da quantidade de comparações e das trocas.
+Exemplo resumido:
+
+    Bubble Sort
+      Antes: [71876166, 708592740, 1483128881, ...]
+      Depois: [71876166,  ... , 2145174067]
+      Tempo        : 0.001 ms
+      Comparações  : 45
+      Trocas       : 20
+
 Teste entradas inválidas:
 
     ./sort_main
